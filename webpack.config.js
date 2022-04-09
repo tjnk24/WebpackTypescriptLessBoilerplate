@@ -40,18 +40,21 @@ module.exports = {
             {
                 test:/\.less$/,
                 use: [
-                    {loader: development ? 'style-loader' : MiniCssExtractPlugin.loader},
+                    MiniCssExtractPlugin.loader,
                     'css-loader',
-                    'less-loader',
                     {
                         loader: 'postcss-loader',
                         options: {
                             postcssOptions: {
                                 plugins: [
                                     'postcss-preset-env',
+                                    'cssnano',
                                 ],
                             },
                         },
+                    },
+                    {
+                        loader: 'less-loader',
                     },
                 ],
             },
@@ -91,6 +94,7 @@ module.exports = {
             template: './src/index.html',
         }),
         new MiniCssExtractPlugin({
+            chunkFilename: '[name].css',
             filename: '[name].css',
         }),
     ],
